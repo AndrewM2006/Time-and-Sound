@@ -10,12 +10,12 @@ namespace Time_and_Sound
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         Texture2D bombTexture;
+        Texture2D explosionTexture;
         SpriteFont timeFont;
         float seconds;
         float startTime;
         MouseState mouseState;
         SoundEffectInstance explodeInstance;
-        int state = 0;
         bool exploded;
 
 
@@ -42,6 +42,7 @@ namespace Time_and_Sound
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             bombTexture = Content.Load<Texture2D>("bomb");
+            explosionTexture = Content.Load<Texture2D>("ExplosionBG");
             timeFont = Content.Load<SpriteFont>("Time");
             var explode = Content.Load<SoundEffect>("explosion");
             explodeInstance = explode.CreateInstance();
@@ -86,6 +87,10 @@ namespace Time_and_Sound
             _spriteBatch.Begin();
             _spriteBatch.Draw(bombTexture, new Rectangle(50, 50, 700, 400), Color.White);
             _spriteBatch.DrawString(timeFont, (15-seconds).ToString("00.0"), new Vector2(270, 200), Color.Black);
+            if (exploded)
+            {
+                _spriteBatch.Draw(explosionTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
+            }
             _spriteBatch.End();
             base.Draw(gameTime);
         }
